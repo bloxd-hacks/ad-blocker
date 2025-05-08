@@ -1,0 +1,29 @@
+(() => {
+    const hideAds = () => {
+        const adSelectors = [
+            '[class*="ad-"]',
+            '[id*="ad"]',
+            '[class*="adsbygoogle"]',
+            'iframe[src*="ads"]',
+            '.advertisement',
+            '.popup-ad'
+        ];
+
+        for (const selector of adSelectors) {
+            document.querySelectorAll(selector).forEach(node => {
+                Object.assign(node.style, {
+                    visibility: 'hidden',
+                    position: 'fixed',
+                    width: '0px',
+                    height: '0px',
+                    overflow: 'hidden'
+                });
+            });
+        }
+    };
+
+    hideAds();
+    const adObserver = new MutationObserver(hideAds);
+    adObserver.observe(document.body, { childList: true, subtree: true });
+})();
+
